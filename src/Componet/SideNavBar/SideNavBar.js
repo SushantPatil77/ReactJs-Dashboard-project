@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaTachometerAlt,
   FaTasks,
@@ -11,7 +11,25 @@ import {
 } from "react-icons/fa";
 import "./SideNav.css";
 
+const statsData = [
+  { title: "New Requirements", count: 25 },
+  { title: "Req. Allocated", count: 15 },
+  { title: "R1: CV Shared", count: 35 },
+  { title: "R2: Technical Cleared", count: 20 },
+  { title: "R3: Client CV Filtered", count: 4 },
+  { title: "R4: Client Interview Cleared", count: 21 },
+  { title: "Offer Released", count: 5 },
+  { title: "Offer Accepted", count: 10 },
+  { title: "Joined", count: 10 },
+];
+
 const SideNavBar = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleBoxClick = (index) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <div className="dashboard-container" style={{ padding: "8px" }}>
       <div className="sidebar">
@@ -55,7 +73,7 @@ const SideNavBar = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginTop:"-13px"
+            marginTop: "-13px",
           }}
         >
           <div style={{ flex: 1, textAlign: "center" }}>
@@ -70,18 +88,14 @@ const SideNavBar = () => {
         </header>
         <div className="card">
           <div className="stats-grid">
-            {[
-              { title: "New Requirements", count: 25 },
-              { title: "Req. Allocated", count: 15 },
-              { title: "R1: CV Shared", count: 35 },
-              { title: "R2: Technical Cleared", count: 20 },
-              { title: "R3: Client CV Filtered", count: 4 },
-              { title: "R4: Client Interview Cleared", count: 21 },
-              { title: "Offer Released", count: 5 },
-              { title: "Offer Accepted", count: 10 },
-              { title: "Joined", count: 10 },
-            ].map((item, index) => (
-              <div key={index} className="stat-box">
+            {statsData.map((item, index) => (
+              <div
+                key={index}
+                className={`stat-box ${
+                  selectedIndex === index ? "selected" : ""
+                }`}
+                onClick={() => handleBoxClick(index)}
+              >
                 <h3>{item.title}</h3>
                 <p>{item.count}</p>
                 <button>View More</button>
